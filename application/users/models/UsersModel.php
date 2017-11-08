@@ -11,4 +11,9 @@ use app\common\models\BasicModel;
 class UsersModel extends BasicModel
 {
     protected $table = "users";
+
+    public function residences()
+    {
+        return $this->hasOne('\app\residences\models\ResidencesModel','creator_id','id');
+    }
 }

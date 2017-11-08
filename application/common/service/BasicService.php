@@ -6,7 +6,7 @@ namespace app\common\service;
  * Time: 14:48
  */
 
-class BasicService
+abstract class BasicService
 {
 
 }

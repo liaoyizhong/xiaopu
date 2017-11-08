@@ -6,7 +6,7 @@ namespace app\common\models;
  * Time: 14:43
  */
 
-class BasicModel extends \think\Model
+abstract class BasicModel extends \think\Model
 {
 
 }

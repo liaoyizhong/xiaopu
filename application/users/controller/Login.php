@@ -3,17 +3,28 @@
 namespace app\users\controller;
 
 use \app\common\Controller\Basic as BasicController;
+use app\common\enums\ResponseCode;
 use think\Request;
 
 class login extends BasicController
 {
+   public function __construct(Request $request = null)
+   {
+       return parent::__construct($request);
+   }
+
     public function check()
     {
         $json = file_get_contents("php://input");
+
         $params = json_decode($json, true);
         $service = \think\Loader::model('\app\users\service\UsersService','service');
         $model = $service->checkLogin($params);
-        echo '<pre>';var_dump($model);echo '</pre>';exit();
+        if($model[0]){
+            $this->showResponse(ResponseCode::SUCCESS,'登录成功',$model[2]);
+        }else{
+            $this->showResponse(ResponseCode::UNKNOW_ERROR,'登录失败');
+        }
     }
     /**
      * 显示资源列表
@@ -22,8 +33,8 @@ class login extends BasicController
      */
     public function index()
     {
-        
-    }       
+        //
+    }
 
     /**
      * 显示创建资源表单页.

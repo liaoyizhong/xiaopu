@@ -17,9 +17,9 @@ return [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'post']],
     ],
-
     'login/check' => ['users/login/check',['method'=>'post']],
     '__rest__'=>[
-        'login'=>'users/login'
+        'login'=>'users/login',
+        'residences'=>'residences/residences'
     ]
 ];

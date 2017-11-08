@@ -12,7 +12,10 @@ use app\users\models\UsersModel;
  */
 class UsersService extends BasicService
 {
-    const PASSWORDTOKEN = 'jiaju';
+    const PASSWORDPRE = 'jiaju';
+
+    const TOKENPRE = 'XiaoPu';
+
     /**
      * @param $id
      * @return null|static
@@ -24,29 +27,39 @@ class UsersService extends BasicService
 
     public function checkLogin($params)
     {
-        if(!isset($params['nick_name']) || !isset($params['password'])){
+        if(!isset($params['name']) || !isset($params['password'])){
             return [FALSE,'缺必要参数'];
         }
         $model = new UsersModel();
-        $list = $model->whereOr('nick_name',$params['nick_name'])->whereOr('phone',$params['nick_name'])->selectOrFail();
+        $list = $model->whereOr('nick_name',$params['name'])->whereOr('phone',$params['name'])->selectOrFail();
         if(!$list){
             [FALSE,'没有符合的数据'];
         }
-        $passwordToken = self::PASSWORDTOKEN;
+        $passwordToken = self::PASSWORDPRE;
         $mdPassword = (string)md5($passwordToken.$params['password']);
 
         $checkState = FALSE;
+        $userId = 0;
         foreach ($list as $item){
             $itemData = $item->getData();
             if($mdPassword === $itemData['password']){
+                $userId = $itemData['id'];
                 $checkState = TRUE;
                 break;
             }
         }
         if($checkState){
-            return [TRUE,"登录成功"];
+            $token = $this->createToken($params['name']);
+            $redis = new \think\cache\driver\Redis();
+            $redis->set($token,$userId,7200);
+            return [TRUE,"登录成功",['token'=>$token]];
         }else{
             return [FALSE,"登录失败"];
         }
     }
+
+   protected function createToken($str)
+   {
+       return md5(\app\users\service\UsersService::TOKENPRE.$str.time());
+   }
 }
