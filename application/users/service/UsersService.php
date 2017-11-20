@@ -54,7 +54,7 @@ class UsersService extends BasicService
             $redis->set($token,$userId,7200);
             return [TRUE,"登录成功",['token'=>$token]];
         }else{
-            return [FALSE,"登录失败"];
+            return [FALSE,"登录失败，帐号密码不正确"];
         }
     }
 

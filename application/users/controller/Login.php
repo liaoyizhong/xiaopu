@@ -2,7 +2,7 @@
 
 namespace app\users\controller;
 
-use \app\common\Controller\Basic as BasicController;
+use \app\common\controller\Basic as BasicController;
 use app\common\enums\ResponseCode;
 use think\Request;
 
@@ -21,9 +21,17 @@ class login extends BasicController
         $service = \think\Loader::model('\app\users\service\UsersService','service');
         $model = $service->checkLogin($params);
         if($model[0]){
-            $this->showResponse(ResponseCode::SUCCESS,'登录成功',$model[2]);
+            $array = [
+                'code' => ResponseCode::SUCCESS,
+                'message' => $model[1],
+                'token' => $model[2]['token'],
+                'data' => []
+            ];
+            $json = json_encode($array);
+            echo $json;
+            exit;
         }else{
-            $this->showResponse(ResponseCode::UNKNOW_ERROR,'登录失败');
+            $this->showResponse(ResponseCode::UNKNOW_ERROR,$model[1]);
         }
     }
     /**

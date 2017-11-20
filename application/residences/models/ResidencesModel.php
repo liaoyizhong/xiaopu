@@ -10,10 +10,20 @@ use app\common\models\BasicModel;
 
 class ResidencesModel extends BasicModel
 {
-    protected $table = 'Residences';
+    protected $table = 'residences';
 
-    public function users()
+    public function creator()
     {
         return $this->belongsTo('\app\users\models\UsersModel','creator_id','id');
+    }
+
+    public function updator()
+    {
+        return $this->belongsTo('\app\users\models\UsersModel','updator_id','id');
+    }
+
+    public function designs()
+    {
+        return $this->hasMany('\app\residences\models\ResidencesDesignModel','residences_id','id');
     }
 }

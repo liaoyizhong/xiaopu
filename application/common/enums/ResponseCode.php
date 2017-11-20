@@ -11,6 +11,7 @@ class ResponseCode
     const SUCCESS = 0; //成功
 
     const PARAMS_MISS = 1001; //缺少参数
+    const PARAMS_INVALID = 1002; //无效参数
 
     const LOGIC_ERROR = 2001; //逻辑出错
 
