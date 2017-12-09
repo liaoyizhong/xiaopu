@@ -30,9 +30,9 @@ class InsertUsers extends Migrator
     {
         $table = $this->table("users");
 
-        $passwordToken = \app\users\service\UsersService::PASSWORDTOKEN;
+        $passwordToken = \app\users\service\UsersService::TOKENPRE;
         $password = "xiaoyujia";
         $mdPassword = md5($passwordToken.$password);
-        $table->insert(["nick_name"=>"admin","password"=>$mdPassword,"phone"=>"18888888888","createtime"=>date('H-m-d H:i:s')])->save();
+        $table->insert(["user_id"=>1,"nick_name"=>"admin","password"=>$mdPassword,"phone"=>"18888888888","createtime"=>date('H-m-d H:i:s')])->save();
     }
 }

@@ -31,10 +31,10 @@ class CreateUsers extends Migrator
         // create the table
         $table = $this->table('Users');
         $table->addColumn('user_id', 'integer')
-            ->addColumn('nick_name','string',['limit'=>200])
-            ->addColumn('password','text')
-            ->addColumn('created', 'datetime')
-            ->addColumn('updatetime','datetime')
+            ->addColumn('nick_name','string',['limit'=>200,"default"=>"登录名"])
+            ->addColumn('password','text',["comment"=>"密码"])
+            ->addColumn('createtime', 'datetime',["default"=>"CURRENT_TIMESTAMP"])
+            ->addColumn('updatetime','datetime',["default"=>"CURRENT_TIMESTAMP"])
             ->addColumn('phone','string',['limit'=>20])
             ->addIndex(['phone'],['unique'=>true])
             ->create();
