@@ -29,7 +29,7 @@ class CreateUsers extends Migrator
     public function change()
     {
         // create the table
-        $table = $this->table('UsersModel');
+        $table = $this->table('Users');
         $table->addColumn('user_id', 'integer')
             ->addColumn('nick_name','string',['limit'=>200])
             ->addColumn('password','text')
